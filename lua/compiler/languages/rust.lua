@@ -11,10 +11,11 @@ M.options = {
   { text = "", value = "separator" },
   { text = "Cargo build and run", value = "option5" },
   { text = "Cargo build", value = "option6" },
-  { text = "Cargo run", value = "option7" },
+  { text = "Cargo test",  value = "option7"},
+  { text = "Cargo run", value = "option8" },
   { text = "", value = "separator" },
-  { text = "Cargo build --workspace and run", value = "option8" },
-  { text = "Cargo build --workspace", value = "option9" }
+  { text = "Cargo build --workspace and run", value = "option9" },
+  { text = "Cargo build --workspace", value = "option10" }
 }
 
 -- Backend - overseer tasks performed on option selected
@@ -142,19 +143,19 @@ function M.action(selected_option)
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
-        tasks = {{ "shell", name = "- Cargo test → " .. "Cargo.toml",
-          cmd = "cargo test " ..                                                        -- compile
+        tasks = {{ "shell", name = "- Cargo build & run → " .. "Cargo.toml",
+          cmd = "cargo build " ..                                                       -- compile
+                " && cargo run" ..                                                      --run
                 " && echo '" .. final_message .. "'"                                    -- echo
         },},},})
     task:start()
     vim.cmd("OverseerOpen")
- elseif selected_option == "option6" then
+  elseif selected_option == "option6" then
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
-        tasks = {{ "shell", name = "- Cargo build & run → " .. "Cargo.toml",
+        tasks = {{ "shell", name = "- Cargo build → " .. "Cargo.toml",
           cmd = "cargo build " ..                                                       -- compile
-                " && cargo run" ..                                                      --run
                 " && echo '" .. final_message .. "'"                                    -- echo
         },},},})
     task:start()
@@ -163,9 +164,9 @@ function M.action(selected_option)
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
-        tasks = {{ "shell", name = "- Cargo build → " .. "Cargo.toml",
-          cmd = "cargo build " ..                                                       -- compile
-                " && echo '" .. final_message .. "'"                                    -- echo
+        tasks = {{ "shell", name = "- Cargo test → " .. "Cargo.toml",
+          cmd = "cargo test " ..                                                        -- compile
+            " && echo '" .. final_message .. "'"                                    -- echo
         },},},})
     task:start()
     vim.cmd("OverseerOpen")
