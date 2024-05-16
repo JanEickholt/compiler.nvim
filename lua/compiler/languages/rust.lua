@@ -142,6 +142,16 @@ function M.action(selected_option)
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
+        tasks = {{ "shell", name = "- Cargo test → " .. "Cargo.toml",
+          cmd = "cargo test " ..                                                        -- compile
+                " && echo '" .. final_message .. "'"                                    -- echo
+        },},},})
+    task:start()
+    vim.cmd("OverseerOpen")
+ elseif selected_option == "option6" then
+    local task = overseer.new_task({
+      name = "- Rust compiler",
+      strategy = { "orchestrator",
         tasks = {{ "shell", name = "- Cargo build & run → " .. "Cargo.toml",
           cmd = "cargo build " ..                                                       -- compile
                 " && cargo run" ..                                                      --run
@@ -149,7 +159,7 @@ function M.action(selected_option)
         },},},})
     task:start()
     vim.cmd("OverseerOpen")
-  elseif selected_option == "option6" then
+  elseif selected_option == "option7" then
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
@@ -159,7 +169,7 @@ function M.action(selected_option)
         },},},})
     task:start()
     vim.cmd("OverseerOpen")
-  elseif selected_option == "option7" then
+  elseif selected_option == "option8" then
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
@@ -169,7 +179,7 @@ function M.action(selected_option)
         },},},})
     task:start()
     vim.cmd("OverseerOpen")
-  elseif selected_option == "option8" then
+  elseif selected_option == "option9" then
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
@@ -180,7 +190,7 @@ function M.action(selected_option)
         },},},})
     task:start()
     vim.cmd("OverseerOpen")
-  elseif selected_option == "option9" then
+  elseif selected_option == "option10" then
     local task = overseer.new_task({
       name = "- Rust compiler",
       strategy = { "orchestrator",
